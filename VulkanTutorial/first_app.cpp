@@ -35,23 +35,12 @@ namespace ke {
 	}
 	void FirstApp::loadGameObjects()
 	{
-		std::vector<KeModel::Vertex> vertices{
-			{{-0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}},
-			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-			{{0.0f, -0.5f}, {0.0f, 0.0f, 1.0f}},
-		};
-		//std::vector<KeModel::Vertex> vertices = create_triangles({ {0.0f, -1.0f}, {1.0f, 0.0f, 0.0f } }, 2.0f, 3);
+		std::shared_ptr<KeModel> keModel = createCubeModel(keDevice, { .0f, .0f, .0f });
 
-		auto keModel = std::make_shared<KeModel>(keDevice, vertices);
-
-		auto triangle = KeGameObject::createGameObject();
-		triangle.model = keModel;
-		triangle.color = { .1f, .8f, .1f };
-		triangle.transform2d.translation.x = 0.0f;
-		triangle.transform2d.scale = { 1.5f, .5f };
-		triangle.transform2d.rotation = .25f * glm::two_pi<float>();
-
-		gameObjects.push_back(std::move(triangle));
-
+		auto cube = KeGameObject::createGameObject();
+		cube.model = keModel;
+		cube.transform.translation = { .0f, .0f, .5f };
+		cube.transform.scale = { .5f, .5f, .5f };
+		gameObjects.push_back(std::move(cube));
 	}
 } //namespace ke
