@@ -17,11 +17,13 @@ namespace ke
 		KeRenderer& operator=(const KeRenderer&) = delete;
 
 		VkRenderPass getSwapChainRenderPass() const { return keSwapChain->getRenderPass(); }
+		float getAspectRatio() const { return keSwapChain->extentAspectRatio(); }
 		bool isFrameInProgress() const { return isFrameStarted; }
 		VkCommandBuffer getCurrentCommandBuffer() const {
 			assert(isFrameStarted && "Cannot get command buffer when frame not in progress");
 			return commandBuffers[currentFrameIndex];
 		}
+
 
 		int getFrameIndex() const {
 			assert(isFrameStarted && "Cannot get frame index when frame not in progress");

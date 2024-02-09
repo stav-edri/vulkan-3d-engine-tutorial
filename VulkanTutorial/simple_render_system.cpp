@@ -49,10 +49,10 @@ namespace ke {
 		PipelineConfigInfo pipelineConfig{};
 		KePipeline::defaultPipelineConfigInfo(pipelineConfig);
 		pipelineConfig.renderPass = renderPass;
-		pipelineConfig.pipelineLayout = pipelineLayout;
+		pipelineConfig.pipelineLayout = pipelineLayout;	
 		kePipeline = std::make_unique<KePipeline>(keDevice, "shaders\\simple_shader.vert.spv", "shaders\\simple_shader.frag.spv", pipelineConfig);
 	}
-	void SimpleRenderSystem::renderGameObjects(VkCommandBuffer commandBuffer, std::vector<KeGameObject>& gameObjects)
+	void SimpleRenderSystem::renderGameObjects(VkCommandBuffer commandBuffer, std::vector<KeGameObject>& gameObjects, const KeCamera &camera)
 	{
 		kePipeline->bind(commandBuffer);
 
@@ -63,7 +63,7 @@ namespace ke {
 
 			SimplePushConstantData push{};
 			push.color = obj.color;
-			push.transform = obj.transform.mat4();
+			push.transform = camera.getProjection() * obj.transform.mat4();
 
 			vkCmdPushConstants(
 				commandBuffer,

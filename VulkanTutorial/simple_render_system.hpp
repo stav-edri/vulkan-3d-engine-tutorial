@@ -2,6 +2,7 @@
 #include "ke_device.hpp"
 #include "ke_game_object.hpp"
 #include "ke_pipeline.hpp"
+#include "ke_camera.hpp"
 
 namespace ke
 {
@@ -13,7 +14,7 @@ namespace ke
 
 		SimpleRenderSystem(const SimpleRenderSystem&) = delete;
 		SimpleRenderSystem& operator=(const SimpleRenderSystem&) = delete;
-		void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<KeGameObject> &gameObjects);
+		void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<KeGameObject> &gameObjects, const KeCamera &camera);
 
 	private:
 		void createPipelineLayout();

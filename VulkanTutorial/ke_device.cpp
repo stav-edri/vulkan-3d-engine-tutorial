@@ -118,9 +118,20 @@ void KeDevice::pickPhysicalDevice() {
   std::vector<VkPhysicalDevice> devices(deviceCount);
   vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
 
+  for (const auto& device : devices) {
+      VkPhysicalDeviceProperties props{};
+      vkGetPhysicalDeviceProperties(device, &props);
+      std::cout << "pd: " << props.deviceName;
+      if (isDeviceSuitable(device)) {
+          std::cout << " is suitable";
+      }
+      std::cout << std::endl;
+  }
+
   for (const auto &device : devices) {
     if (isDeviceSuitable(device)) {
       physicalDevice = device;
+
       break;
     }
   }

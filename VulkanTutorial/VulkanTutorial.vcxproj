@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="first_app.cpp" />
+    <ClCompile Include="ke_camera.cpp" />
     <ClCompile Include="ke_game_object.cpp" />
     <ClCompile Include="ke_model.cpp" />
     <ClCompile Include="ke_renderer.cpp" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="first_app.hpp" />
+    <ClInclude Include="ke_camera.hpp" />
     <ClInclude Include="ke_game_object.hpp" />
     <ClInclude Include="ke_model.hpp" />
     <ClInclude Include="ke_renderer.hpp" />
