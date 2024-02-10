@@ -2,6 +2,7 @@
 #include "vertex_generator.hpp"
 #include "simple_render_system.hpp"
 #include "ke_camera.hpp"
+#include "keyboard_movement_controller.hpp"
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -10,6 +11,7 @@
 
 #include <stdexcept>
 #include <array>
+#include <chrono>
 
 namespace ke {
 	FirstApp::FirstApp()
@@ -23,11 +25,23 @@ namespace ke {
 	{
 		SimpleRenderSystem simpleRenderSystem{ keDevice, keRenderer.getSwapChainRenderPass() };
 		KeCamera camera{};
-		// camera.setViewDirection(glm::vec3(0.f), glm::vec3(.5f, 0.f, 1.f));
-		camera.setViewTarget(glm::vec3(01.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 1.5f));
+		camera.setViewTarget(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.5f));
+
+		auto viewerObject = KeGameObject::createGameObject();
+		KeyboardMovementController cameraController{};
+
+		auto currentTime = std::chrono::high_resolution_clock::now();
 
 		while (!keWindow.shouldClose()) {
 			glfwPollEvents();
+
+			auto newTime = std::chrono::high_resolution_clock::now();
+			float frameTime = std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
+			currentTime = newTime;
+
+			cameraController.moveInPlaneXZ(keWindow.getGLFWwindow(), frameTime, viewerObject);
+			camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
+
 			float aspect = keRenderer.getAspectRatio();
 
 			camera.setPerspectiveProjection(glm::radians(50.f), aspect, .1f, 10.f);

@@ -54,8 +54,8 @@ namespace ke {
 		}
 
 		KeGameObject(const KeGameObject&) = delete;
-		KeGameObject(KeGameObject&&) = default;
 		KeGameObject &operator=(const KeGameObject&) = delete;
+		KeGameObject(KeGameObject&&) = default;
 		KeGameObject &operator=(KeGameObject&&) = default;
 
 		id_t getId() { return id; }
