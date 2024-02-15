@@ -31,6 +31,7 @@ namespace ke {
 		KeyboardMovementController cameraController{};
 
 		auto currentTime = std::chrono::high_resolution_clock::now();
+		const float MAX_FRAME_TIME = 1.f;
 
 		while (!keWindow.shouldClose()) {
 			glfwPollEvents();
@@ -38,6 +39,8 @@ namespace ke {
 			auto newTime = std::chrono::high_resolution_clock::now();
 			float frameTime = std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
 			currentTime = newTime;
+
+			frameTime = glm::min(frameTime, MAX_FRAME_TIME);
 
 			cameraController.moveInPlaneXZ(keWindow.getGLFWwindow(), frameTime, viewerObject);
 			camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);

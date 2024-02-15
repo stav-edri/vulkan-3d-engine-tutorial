@@ -21,7 +21,13 @@ namespace ke {
 			static std::vector <VkVertexInputAttributeDescription> getAttributeDescriptions();
 		};
 
-		KeModel(KeDevice &device, const std::vector<Vertex>& vertices);
+		struct Builder {
+			std::vector<Vertex> vertices{};
+			std::vector<uint32_t> indices{};
+		};
+
+
+		KeModel(KeDevice& device, const KeModel::Builder& builder);
 		~KeModel();
 
 		KeModel(const KeModel&) = delete;
@@ -32,11 +38,19 @@ namespace ke {
 
 	private:
 		void createVertexBuffers(const std::vector<Vertex>& vertices);
+		void createIndexBuffers(const std::vector<uint32_t>& indices);
 
 		KeDevice &keDevice;
+
 		VkBuffer vertexBuffer;
 		VkDeviceMemory vertexBufferMemory;
 		uint32_t vertexCount;
+
+		bool hasIndexBuffer = false;
+
+		VkBuffer indexBuffer;
+		VkDeviceMemory indexBufferMemory;
+		uint32_t indexCount;
 	};
 }
 
